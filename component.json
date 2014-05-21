@@ -1,0 +1,24 @@
+{
+  "name": "noflo-video",
+  "description": "NoFlo components for video handling",
+  "author": "Henri Bergius <henri.bergius@iki.fi>",
+  "repo": "noflo/noflo-video",
+  "version": "0.1.0",
+  "keywords": [],
+  "dependencies": {
+    "noflo/noflo": "*",
+    "visionmedia/superagent": "*"
+  },
+  "scripts": [
+    "index.js",
+    "components/GetThumbnail.coffee"
+  ],
+  "json": [
+    "component.json"
+  ],
+  "noflo": {
+    "components": {
+      "GetThumbnail": "components/GetThumbnail.coffee"
+    }
+  }
+}
