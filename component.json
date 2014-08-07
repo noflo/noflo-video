@@ -3,11 +3,12 @@
   "description": "NoFlo components for video handling",
   "author": "Henri Bergius <henri.bergius@iki.fi>",
   "repo": "noflo/noflo-video",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "keywords": [],
   "dependencies": {
     "noflo/noflo": "*",
-    "visionmedia/superagent": "*"
+    "visionmedia/superagent": "*",
+    "medialize/URI.js": "*"
   },
   "scripts": [
     "index.js",

@@ -1,5 +1,6 @@
 noflo = require 'noflo'
 superagent = require 'superagent'
+uri = require 'URIjs'
 
 class GetThumbnail extends noflo.AsyncComponent
   icon: 'youtube-play'
@@ -37,6 +38,9 @@ class GetThumbnail extends noflo.AsyncComponent
     match = video.match /vimeo.com\/video\/([^?]*)/
     if match
       return @getVimeo match[1], callback
+    match = video.match /cdn.embedly.com\/widgets\/media.html/
+    if match
+      return @getEmbedly video, callback
     callback video
 
   getYouTube: (id, callback) ->
@@ -52,5 +56,17 @@ class GetThumbnail extends noflo.AsyncComponent
         return callback new Error "Failed to parse response"
       return callback new Error 'Missing return info' unless data.length
       callback null, data[0].thumbnail_large
+
+  getEmbedly: (url, callback) ->
+    parsed = uri url
+    unless parsed.hasQuery 'src'
+      return callback new Error 'No source embed found for Embed.ly'
+    if parsed.hasQuery 'image'
+      data = parsed.search true
+      return callback null, data.image
+
+    # Fall back to regular handling
+    data = parsed.search true
+    @getThumbnail data.src, callback
 
 exports.getComponent = -> new GetThumbnail
