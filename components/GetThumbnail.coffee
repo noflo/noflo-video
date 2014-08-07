@@ -47,7 +47,7 @@ class GetThumbnail extends noflo.AsyncComponent
     callback null, "http://img.youtube.com/vi/#{id}/hqdefault.jpg"
 
   getVimeo: (id, callback) ->
-    superagent.get "http://vimeo.com/api/v2/video/#{id}.json"
+    superagent.get("http://vimeo.com/api/v2/video/#{id}.json")
     .end (err, res) ->
       return callback err if err
       try
