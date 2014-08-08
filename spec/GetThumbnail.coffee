@@ -43,7 +43,7 @@ describe 'GetThumbnail component', ->
       ins.send '//cdn.embedly.com/widgets/media.html?src=http%3A%2F%2Fwww.youtube.com%2Fembed%2FVBbsqJ27HZ0%3Ffeature%3Doembed&url=http%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DVBbsqJ27HZ0&image=http%3A%2F%2Fi.ytimg.com%2Fvi%2FVBbsqJ27HZ0%2Fhqdefault.jpg&key=internal&type=text%2Fhtml&schema=youtube'
     it 'should produce thumbnail URL for YouTube via Embed.ly (entitized)', (done) ->
       out.on 'data', (data) ->
-        chai.expect(data).to.equal 'http://img.youtube.com/vi/VBbsqJ27HZ0/hqdefault.jpg'
+        chai.expect(data).to.equal 'http://i.ytimg.com/vi/VBbsqJ27HZ0/hqdefault.jpg'
         done()
       ins.send 'https://cdn.embedly.com/widgets/media.html?src=http%3A%2F%2Fwww.youtube.com%2Fembed%2FVBbsqJ27HZ0%3Ffeature%3Doembed&amp;url=http%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DVBbsqJ27HZ0&amp;image=http%3A%2F%2Fi.ytimg.com%2Fvi%2FVBbsqJ27HZ0%2Fhqdefault.jpg&amp;key=b7d04c9b404c499eba89ee7072e1c4f7&amp;type=text%2Fhtml&amp;schema=youtube'
     it 'should produce thumbnail URL for Vimeo', (done) ->

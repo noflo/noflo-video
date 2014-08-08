@@ -58,7 +58,7 @@ class GetThumbnail extends noflo.AsyncComponent
       callback null, data[0].thumbnail_large
 
   getEmbedly: (url, callback) ->
-    parsed = uri url
+    parsed = uri url.replace /&amp;/g, '&'
     unless parsed.hasQuery 'src'
       return callback new Error 'No source embed found for Embed.ly'
     if parsed.hasQuery 'image'
