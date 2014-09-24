@@ -47,11 +47,13 @@ describe 'GetThumbnail component', ->
         done()
       ins.send 'https://cdn.embedly.com/widgets/media.html?src=http%3A%2F%2Fwww.youtube.com%2Fembed%2FVBbsqJ27HZ0%3Ffeature%3Doembed&amp;url=http%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DVBbsqJ27HZ0&amp;image=http%3A%2F%2Fi.ytimg.com%2Fvi%2FVBbsqJ27HZ0%2Fhqdefault.jpg&amp;key=b7d04c9b404c499eba89ee7072e1c4f7&amp;type=text%2Fhtml&amp;schema=youtube'
     it 'should produce thumbnail URL for Vimeo', (done) ->
+      @timeout 6000
       out.on 'data', (data) ->
         chai.expect(data).to.equal 'http://i.vimeocdn.com/video/470731940_640.jpg'
         done()
       ins.send '//player.vimeo.com/video/91393694?title=0&amp;byline=0&amp;color=ffffff'
     it 'should produce thumbnail URL for Vimeo via Embed.ly', (done) ->
+      @timeout 6000
       out.on 'data', (data) ->
         chai.expect(data).to.equal 'http://i.vimeocdn.com/video/475921185_1280.jpg'
         done()
@@ -61,6 +63,16 @@ describe 'GetThumbnail component', ->
         chai.expect(data).to.equal 'http://mirrors.dotsrc.org/fosdem/2014/AW1121/Sunday/Flowbased_programming_for_heterogeneous_systems.webm'
         done()
       ins.send 'http://mirrors.dotsrc.org/fosdem/2014/AW1121/Sunday/Flowbased_programming_for_heterogeneous_systems.webm'
+
+  describe 'with a HTML object', ->
+    it 'should produce thumbnail URL for YouTube without query', (done) ->
+      @timeout 6000
+      out.on 'data', (data) ->
+        chai.expect(data).to.be.an 'object'
+        chai.expect(data.src).to.equal 'http://img.youtube.com/vi/8Dos61_6sss/hqdefault.jpg'
+        done()
+      ins.send
+        html: "<iframe src=\"//www.youtube.com/embed/8Dos61_6sss\"></iframe>"
 
   describe 'with a video object', ->
     it 'should produce thumbnail URL for YouTube without query', (done) ->
@@ -78,6 +90,7 @@ describe 'GetThumbnail component', ->
       ins.send
         video: '//www.youtube.com/embed/P5cdlLTqb24?list=UUnPE7t9tqwcsO0LLyw5zuPQ'
     it 'should produce thumbnail URL for Vimeo', (done) ->
+      @timeout 6000
       out.on 'data', (data) ->
         chai.expect(data).to.be.an 'object'
         chai.expect(data.src).to.equal 'http://i.vimeocdn.com/video/470731940_640.jpg'

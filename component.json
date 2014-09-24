@@ -8,7 +8,8 @@
   "dependencies": {
     "noflo/noflo": "*",
     "visionmedia/superagent": "*",
-    "medialize/URI.js": "*"
+    "medialize/URI.js": "*",
+    "bergie/node-htmlparser": "published"
   },
   "scripts": [
     "index.js",

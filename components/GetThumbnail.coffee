@@ -1,5 +1,6 @@
 noflo = require 'noflo'
 superagent = require 'superagent'
+htmlparser = require 'htmlparser'
 uri = require 'URIjs'
 
 class GetThumbnail extends noflo.AsyncComponent
@@ -29,6 +30,22 @@ class GetThumbnail extends noflo.AsyncComponent
         video.src = thumb
         @outPorts.out.send video
         do callback
+    if typeof video is 'object' and video.html
+      handler = new htmlparser.DefaultHandler (err, dom) =>
+        return callback err if err
+        return callback video if dom.length > 1
+        return callback video unless dom.length
+        return callback video unless dom[0].name in ['video', 'iframe']
+        return callback video unless dom[0].attribs?.src
+        video.video = dom[0].attribs.src
+        return @getThumbnail video.video, (err, thumb) =>
+          return callback video if err
+          video.src = thumb
+          @outPorts.out.send video
+          do callback
+      parser = new htmlparser.Parser handler
+      parser.parseComplete video.html
+      return
     callback video
 
   getThumbnail: (video, callback) ->
