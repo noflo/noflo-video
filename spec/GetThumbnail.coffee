@@ -79,6 +79,12 @@ describe 'GetThumbnail component', ->
         done()
       ins.send
         html: "<iframe src=\"//www.youtube.com/embed/8Dos61_6sss\"></iframe>"
+    it 'should produce thumbnail URL for Vine via Embed.ly', (done) ->
+      @timeout 6000
+      out.on 'data', (data) ->
+        chai.expect(data).to.equal 'https://v.cdn.vine.co/r/videos/B5B06468B91176403722801139712_342c9a1c624.1.5.15775156368984795444.mp4.jpg?versionId=edU_LrAtIFsGvZj.Fgi0Si1bem68tBlk'
+        done()
+      ins.send '<iframe class="embedly-embed" src="//cdn.embedly.com/widgets/media.html?src=https%3A%2F%2Fmtc.cdn.vine.co%2Fr%2Fvideos%2FB5B06468B91176403722801139712_342c9a1c624.1.5.15775156368984795444.mp4%3FversionId%3DMfbYrYHKtQn5CarqDt9SoZHnUeQRVt7Z&src_secure=1&url=https%3A%2F%2Fvine.co%2Fv%2FOUnPWge7Jnj&image=https%3A%2F%2Fv.cdn.vine.co%2Fr%2Fvideos%2FB5B06468B91176403722801139712_342c9a1c624.1.5.15775156368984795444.mp4.jpg%3FversionId%3DedU_LrAtIFsGvZj.Fgi0Si1bem68tBlk&key=internal&type=video%2Fmp4&schema=vine" width="500" height="500" scrolling="no" frameborder="0" allowfullscreen></iframe>'
 
   describe 'with a video object', ->
     it 'should produce thumbnail URL for YouTube without query', (done) ->
@@ -103,6 +109,14 @@ describe 'GetThumbnail component', ->
         done()
       ins.send
         video: '//player.vimeo.com/video/91393694?title=0&amp;byline=0&amp;color=ffffff'
+    it 'should produce thumbnail URL for Vine via Embed.ly', (done) ->
+      @timeout 6000
+      out.on 'data', (data) ->
+        chai.expect(data).to.be.an 'object'
+        chai.expect(data.src).to.equal 'https://v.cdn.vine.co/r/videos/B5B06468B91176403722801139712_342c9a1c624.1.5.15775156368984795444.mp4.jpg?versionId=edU_LrAtIFsGvZj.Fgi0Si1bem68tBlk'
+        done()
+      ins.send
+        video: '//cdn.embedly.com/widgets/media.html?src=https%3A%2F%2Fmtc.cdn.vine.co%2Fr%2Fvideos%2FB5B06468B91176403722801139712_342c9a1c624.1.5.15775156368984795444.mp4%3FversionId%3DMfbYrYHKtQn5CarqDt9SoZHnUeQRVt7Z&src_secure=1&url=https%3A%2F%2Fvine.co%2Fv%2FOUnPWge7Jnj&image=https%3A%2F%2Fv.cdn.vine.co%2Fr%2Fvideos%2FB5B06468B91176403722801139712_342c9a1c624.1.5.15775156368984795444.mp4.jpg%3FversionId%3DedU_LrAtIFsGvZj.Fgi0Si1bem68tBlk&key=internal&type=video%2Fmp4&schema=vine'
     it 'should not produce thumbnail URL for video tags', (done) ->
       missed.on 'data', (data) ->
         chai.expect(data).to.be.an 'object'
