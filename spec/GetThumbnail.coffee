@@ -58,6 +58,12 @@ describe 'GetThumbnail component', ->
         chai.expect(data).to.equal 'http://i.vimeocdn.com/video/475921185_1280.jpg'
         done()
       ins.send '//cdn.embedly.com/widgets/media.html?src=http%3A%2F%2Fplayer.vimeo.com%2Fvideo%2F95895989&src_secure=1&url=http%3A%2F%2Fvimeo.com%2F95895989&image=http%3A%2F%2Fi.vimeocdn.com%2Fvideo%2F475921185_1280.jpg&key=internal&type=text%2Fhtml&schema=vimeo'
+    it 'should produce thumbnail URL for Vine via Embed.ly', (done) ->
+      @timeout 6000
+      out.on 'data', (data) ->
+        chai.expect(data).to.equal 'https://v.cdn.vine.co/r/videos/B5B06468B91176403722801139712_342c9a1c624.1.5.15775156368984795444.mp4.jpg?versionId=edU_LrAtIFsGvZj.Fgi0Si1bem68tBlk'
+        done()
+      ins.send '//cdn.embedly.com/widgets/media.html?src=https%3A%2F%2Fmtc.cdn.vine.co%2Fr%2Fvideos%2FB5B06468B91176403722801139712_342c9a1c624.1.5.15775156368984795444.mp4%3FversionId%3DMfbYrYHKtQn5CarqDt9SoZHnUeQRVt7Z&src_secure=1&url=https%3A%2F%2Fvine.co%2Fv%2FOUnPWge7Jnj&image=https%3A%2F%2Fv.cdn.vine.co%2Fr%2Fvideos%2FB5B06468B91176403722801139712_342c9a1c624.1.5.15775156368984795444.mp4.jpg%3FversionId%3DedU_LrAtIFsGvZj.Fgi0Si1bem68tBlk&key=internal&type=video%2Fmp4&schema=vine'
     it 'should not produce thumbnail URL for video tags', (done) ->
       missed.on 'data', (data) ->
         chai.expect(data).to.equal 'http://mirrors.dotsrc.org/fosdem/2014/AW1121/Sunday/Flowbased_programming_for_heterogeneous_systems.webm'
