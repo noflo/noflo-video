@@ -88,9 +88,11 @@ describe 'GetThumbnail component', ->
     it 'should produce thumbnail URL for YouTube via Embed.ly', (done) ->
       @timeout 6000
       out.on 'data', (data) ->
-        chai.expect(data).to.equal 'http://i.ytimg.com/vi/bWKzVO7WJcU/hqdefault.jpg'
+        chai.expect(data).to.be.an 'object'
+        chai.expect(data.src).to.equal 'http://i.ytimg.com/vi/bWKzVO7WJcU/hqdefault.jpg'
         done()
-      ins.send '<iframe class="embedly-embed" src="//cdn.embedly.com/widgets/media.html?src=http%3A%2F%2Fwww.youtube.com%2Fembed%2FbWKzVO7WJcU%3Ffeature%3Doembed&url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DbWKzVO7WJcU&image=http%3A%2F%2Fi.ytimg.com%2Fvi%2FbWKzVO7WJcU%2Fhqdefault.jpg&key=internal&type=text%2Fhtml&schema=youtube" width="500" height="281" scrolling="no" frameborder="0" allowfullscreen></iframe>'
+      ins.send
+        html: '<iframe src="https://cdn.embedly.com/widgets/media.html?src=http%3A%2F%2Fwww.youtube.com%2Fembed%2FbWKzVO7WJcU%3Ffeature%3Doembed&url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DbWKzVO7WJcU&image=http%3A%2F%2Fi.ytimg.com%2Fvi%2FbWKzVO7WJcU%2Fhqdefault.jpg&key=b7d04c9b404c499eba89ee7072e1c4f7&type=text%2Fhtml&schema=youtube" width="854" height="480" scrolling="no" frameborder="0" allowfullscreen="allowfullscreen"></iframe>'
 
   describe 'with a video object', ->
     it 'should produce thumbnail URL for YouTube without query', (done) ->
