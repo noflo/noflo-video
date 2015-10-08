@@ -21,7 +21,7 @@
     "URIjs": "1.16.1",
     "noflo": "0.5.14",
     "htmlparser": "1.7.7",
-    "superagent": "0.18.2"
+    "superagent": "1.4.0"
   },
   "devDependencies": {
     "grunt": "0.4.5",
