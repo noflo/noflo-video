@@ -88,6 +88,7 @@ exports.getComponent = ->
       parser = new htmlparser.Parser handler
       parser.parseComplete video.html
       return
-    callback video
+    out.send video
+    do callback
 
   c
