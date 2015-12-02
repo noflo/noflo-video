@@ -1,7 +1,7 @@
 {
   "name": "noflo-video",
   "description": "NoFlo components for video handling",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "author": {
     "name": "Henri Bergius",
     "email": "henri.bergius@iki.fi",
@@ -11,17 +11,12 @@
     "type": "git",
     "url": "git://github.com/noflo/noflo-video.git"
   },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "undefined/blob/master/LICENSE-MIT"
-    }
-  ],
+  "license": "MIT",
   "dependencies": {
-    "URIjs": "1.16.1",
-    "noflo": "^0.5.20",
     "htmlparser": "1.7.x",
-    "superagent": "0.18.2"
+    "noflo": "^0.5.20",
+    "superagent": "0.18.2",
+    "urijs": "^1.17.0"
   },
   "devDependencies": {
     "chai": "3.3.0",

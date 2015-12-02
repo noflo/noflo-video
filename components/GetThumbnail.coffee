@@ -1,7 +1,7 @@
 noflo = require 'noflo'
 superagent = require 'superagent'
 htmlparser = require 'htmlparser'
-uri = require 'URIjs'
+uri = require 'urijs'
 
 getThumbnail = (video, callback) ->
   match = video.match /youtube.com\/embed\/([^?]*)/
