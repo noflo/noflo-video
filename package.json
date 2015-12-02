@@ -19,7 +19,7 @@
   ],
   "dependencies": {
     "URIjs": "1.16.1",
-    "noflo": "0.5.14",
+    "noflo": "0.5.20",
     "htmlparser": "1.7.7",
     "superagent": "0.18.2"
   },
