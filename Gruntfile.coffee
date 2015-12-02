@@ -87,7 +87,7 @@ module.exports = ->
     @task.run 'noflo_manifest'
     if target is 'all' or target is 'nodejs'
       @task.run 'cafemocha'
-    if target is 'all' or target is 'browser'
+    if target is 'browser'
       @task.run 'noflo_browser'
       @task.run 'mocha_phantomjs'
 
