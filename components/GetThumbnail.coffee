@@ -80,6 +80,11 @@ exports.getComponent = ->
         return callback null, video if dom.length > 1
         return callback null, video unless dom.length
         return callback null, video unless dom[0].name in ['video', 'iframe']
+        unless dom[0].attribs?.src
+          # Video tag can have source
+          unless dom[0].children
+            return callback null, video
+          dom[0].attribs.src = dom[0].children[0].attribs?.src
         return callback null, video unless dom[0].attribs?.src
         video.video = dom[0].attribs.src
         getThumbnail video.video, (err, thumb) ->

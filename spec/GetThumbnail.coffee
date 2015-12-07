@@ -93,6 +93,22 @@ describe 'GetThumbnail component', ->
         done()
       ins.send
         html: '<iframe src="https://cdn.embedly.com/widgets/media.html?src=http%3A%2F%2Fwww.youtube.com%2Fembed%2FbWKzVO7WJcU%3Ffeature%3Doembed&url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DbWKzVO7WJcU&image=http%3A%2F%2Fi.ytimg.com%2Fvi%2FbWKzVO7WJcU%2Fhqdefault.jpg&key=b7d04c9b404c499eba89ee7072e1c4f7&type=text%2Fhtml&schema=youtube" width="854" height="480" scrolling="no" frameborder="0" allowfullscreen="allowfullscreen"></iframe>'
+    it 'should not produce thumbnail URL for video with src attribute', (done) ->
+      @timeout 6000
+      missed.on 'data', (data) ->
+        chai.expect(data).to.be.an 'object'
+        # chai.expect(data.src).to.equal 'http://i.ytimg.com/vi/bWKzVO7WJcU/hqdefault.jpg'
+        done()
+      ins.send
+        html: "<video autoplay=\"true\" loop=\"true\" src=\"//s3-us-west-2.amazonaws.com/cdn.thegrid.io/posts/cta-ui-bg.mp4\"></video>"
+    it 'should not produce thumbnail URL for video with source child', (done) ->
+      @timeout 6000
+      missed.on 'data', (data) ->
+        chai.expect(data).to.be.an 'object'
+        # chai.expect(data.src).to.equal 'http://i.ytimg.com/vi/bWKzVO7WJcU/hqdefault.jpg'
+        done()
+      ins.send
+        html: "<video autoplay=\"true\" loop=\"true\"><source type=\"video/mp4\" src=\"//s3-us-west-2.amazonaws.com/cdn.thegrid.io/posts/cta-ui-bg.mp4\"><source type=\"video/webm\" src=\"//s3-us-west-2.amazonaws.com/cdn.thegrid.io/posts/cta-ui-bg.webm\"></video>"
 
   describe 'with a video object', ->
     it 'should produce thumbnail URL for YouTube without query', (done) ->
