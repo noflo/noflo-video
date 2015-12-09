@@ -71,6 +71,15 @@ describe 'GetThumbnail component', ->
       ins.send 'http://mirrors.dotsrc.org/fosdem/2014/AW1121/Sunday/Flowbased_programming_for_heterogeneous_systems.webm'
 
   describe 'with a HTML object', ->
+    it 'should produce thumbnail URL for YouTube', (done) ->
+      @timeout 6000
+      out.on 'data', (data) ->
+        chai.expect(data).to.be.an 'object'
+        chai.expect(data.video).to.equal '//www.youtube.com/embed/P5cdlLTqb24?list=UUnPE7t9tqwcsO0LLyw5zuPQ'
+        chai.expect(data.src).to.equal 'http://img.youtube.com/vi/P5cdlLTqb24/hqdefault.jpg'
+        done()
+      ins.send
+        html: '<iframe src="//www.youtube.com/embed/P5cdlLTqb24?list=UUnPE7t9tqwcsO0LLyw5zuPQ"></iframe>'
     it 'should strip out any dummy HTML around a possible source', (done) ->
       @timeout 6000
       out.on 'data', (data) ->
