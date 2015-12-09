@@ -41,6 +41,21 @@ getEmbedly = (url, callback) ->
   data = parsed.search true
   getThumbnail data.src, callback
 
+goDeep = (dom) ->
+  src = null
+  for root in dom
+    unless root.children
+      # Root is a child
+      if root.name in ['video', 'iframe', 'source']
+        if root.attribs?.src
+          return root.attribs?.src
+        return
+    # Otherwise, keep going deeper trying to find some child
+    url = goDeep root.children if root.children
+    # Only say we find a src if it's not null
+    src = url if url
+  return src
+
 exports.getComponent = ->
   c = new noflo.Component
   c.icon = 'youtube-play'
@@ -79,15 +94,9 @@ exports.getComponent = ->
         return callback err if err
         return callback null, video if dom.length > 1
         return callback null, video unless dom.length
-        return callback null, video unless dom[0].name in ['video', 'iframe']
-        unless dom[0].attribs?.src
-          # Video tag can have source
-          unless dom[0].children
-            return callback null, video
-          dom[0].attribs.src = dom[0].children[0].attribs?.src
-        return callback null, video unless dom[0].attribs?.src
-        video.video = dom[0].attribs.src
-        getThumbnail video.video, (err, thumb) ->
+        src = goDeep dom
+        return callback null, video unless src
+        getThumbnail src, (err, thumb) ->
           return callback video if err
           video.src = thumb
           out.send video
