@@ -96,7 +96,8 @@ exports.getComponent = ->
         return callback null, video unless dom.length
         src = goDeep dom
         return callback null, video unless src
-        getThumbnail src, (err, thumb) ->
+        video.video = src
+        getThumbnail video.video, (err, thumb) ->
           return callback video if err
           video.src = thumb
           out.send video
