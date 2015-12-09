@@ -71,14 +71,24 @@ describe 'GetThumbnail component', ->
       ins.send 'http://mirrors.dotsrc.org/fosdem/2014/AW1121/Sunday/Flowbased_programming_for_heterogeneous_systems.webm'
 
   describe 'with a HTML object', ->
-    it 'should produce thumbnail URL for YouTube without query', (done) ->
+    it 'should strip out any dummy HTML around a possible source', (done) ->
       @timeout 6000
       out.on 'data', (data) ->
         chai.expect(data).to.be.an 'object'
-        chai.expect(data.src).to.equal 'http://img.youtube.com/vi/8Dos61_6sss/hqdefault.jpg'
+        chai.expect(data.src).to.equal 'http://img.youtube.com/vi/or88GPhXlWw/hqdefault.jpg'
         done()
       ins.send
-        html: "<iframe src=\"//www.youtube.com/embed/8Dos61_6sss\"></iframe>"
+        html: "<a href=\"href\"><iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/or88GPhXlWw\" frameborder=\"0\" allowfullscreen=\"allowfullscreen\"></iframe>\"Hel</a>"
+
+    it 'should strip out any really dummy HTML around a possible source', (done) ->
+      @timeout 6000
+      out.on 'data', (data) ->
+        chai.expect(data).to.be.an 'object'
+        chai.expect(data.src).to.equal 'http://img.youtube.com/vi/or88GPhXlWw/hqdefault.jpg'
+        done()
+      ins.send
+        html: "<a href=\"href\"><b></b><h1><b><i><p><iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/or88GPhXlWw\" frameborder=\"0\" allowfullscreen=\"allowfullscreen\"></iframe>\"Hel</p></i></b><b><i>Foo</i></b></a>"
+
     it 'should produce thumbnail URL for Vine via Embed.ly', (done) ->
       @timeout 6000
       out.on 'data', (data) ->
