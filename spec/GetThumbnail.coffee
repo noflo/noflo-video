@@ -80,6 +80,14 @@ describe 'GetThumbnail component', ->
         done()
       ins.send
         html: '<iframe src="//www.youtube.com/embed/P5cdlLTqb24?list=UUnPE7t9tqwcsO0LLyw5zuPQ"></iframe>'
+    it 'should strip out any dummy HTML around a possible source which have children', (done) ->
+      @timeout 6000
+      out.on 'data', (data) ->
+        chai.expect(data).to.be.an 'object'
+        chai.expect(data.src).to.equal 'http://img.youtube.com/vi/t0T_h7Pt4Ug/hqdefault.jpg'
+        done()
+      ins.send
+        html: "<a data-grid-id=\"2a557a4d-92e9-4081-8748-35cec9052ccd\" href=\"href\"><iframe width=\" 560\" height=\"315\" src=\"https://www.youtube.com/embed/t0T_h7Pt4Ug\" frameborder=\"0\" allowfullscreen=\"\">\"What would you attempt if you knew you couldn't fail?</iframe></a>"
     it 'should strip out any dummy HTML around a possible source', (done) ->
       @timeout 6000
       out.on 'data', (data) ->
