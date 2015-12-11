@@ -44,13 +44,19 @@ getEmbedly = (url, callback) ->
 goDeep = (dom) ->
   src = null
   for root in dom
+    # If root is a video or iframe, try to get its src, no matter what
+    if root.name in ['video', 'iframe']
+      if root.attribs?.src
+        return root.attribs?.src
+    # Otherwise, see if it is a child
     unless root.children
-      # Root is a child
+      # Root is a child, so it's a dead end, or get a src or nothing
       if root.name in ['video', 'iframe', 'source']
         if root.attribs?.src
           return root.attribs?.src
-        return
-    # Otherwise, keep going deeper trying to find some child
+        return null
+    # If it's not a child nor video/iframe keep going deeper trying to find
+    # some valid block on its children
     url = goDeep root.children if root.children
     # Only say we find a src if it's not null
     src = url if url
