@@ -1,5 +1,13 @@
 language: node_js
 node_js:
-  - "0.10"
+- '0.10'
 before_script:
-  - npm install -g grunt-cli
+- npm install -g grunt-cli
+deploy:
+  provider: npm
+  email: vilson@void.cc
+  api_key:
+    secure: HVuLVOEbXvVaTpaM7eVVpSnU7/Ej5Feuddfz7kNKN90fa2NOhagGQHGwezSJZsZQkJYoInCb7UVBiiqokM1pbVDvOx54GhP1sfWNaNvC4M+sPBbPOGfgtm3JAczUqOerEWtK2wnhMMI6E1ikNgt8qJefcTrx3apeNTEMYIweqIQ=
+  on:
+    tags: true
+    repo: noflo/noflo-video
