@@ -1,6 +1,7 @@
 noflo = require 'noflo'
 superagent = require 'superagent'
 htmlparser = require 'htmlparser'
+youthumb = require 'youtube-thumbnails'
 uri = require 'urijs'
 
 getThumbnail = (video, callback) ->
@@ -16,7 +17,10 @@ getThumbnail = (video, callback) ->
   callback video
 
 getYouTube = (id, callback) ->
-  callback null, "http://img.youtube.com/vi/#{id}/maxresdefault.jpg"
+  youthumb.all id, (thumbnails) ->
+    if thumbnails?.maxres
+      return callback null, "http://img.youtube.com/vi/#{id}/maxresdefault.jpg"
+    callback null, "http://img.youtube.com/vi/#{id}/hqdefault.jpg"
 
 getVimeo = (id, callback) ->
   superagent.get("http://vimeo.com/api/v2/video/#{id}.json")
