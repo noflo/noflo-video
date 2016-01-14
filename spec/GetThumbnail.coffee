@@ -27,21 +27,25 @@ describe 'GetThumbnail component', ->
 
   describe 'with a video URL string', ->
     it 'should produce thumbnail URL for YouTube without query', (done) ->
+      @timeout 6000
       out.on 'data', (data) ->
         chai.expect(data).to.equal 'http://img.youtube.com/vi/8Dos61_6sss/maxresdefault.jpg'
         done()
       ins.send '//www.youtube.com/embed/8Dos61_6sss'
     it 'should produce thumbnail URL for YouTube with query', (done) ->
+      @timeout 6000
       out.on 'data', (data) ->
-        chai.expect(data).to.equal 'http://img.youtube.com/vi/P5cdlLTqb24/maxresdefault.jpg'
+        chai.expect(data).to.equal 'http://img.youtube.com/vi/P5cdlLTqb24/hqdefault.jpg'
         done()
       ins.send '//www.youtube.com/embed/P5cdlLTqb24?list=UUnPE7t9tqwcsO0LLyw5zuPQ'
     it 'should produce thumbnail URL for YouTube via Embed.ly', (done) ->
+      @timeout 6000
       out.on 'data', (data) ->
         chai.expect(data).to.equal 'http://img.youtube.com/vi/VBbsqJ27HZ0/maxresdefault.jpg'
         done()
       ins.send '//cdn.embedly.com/widgets/media.html?src=http%3A%2F%2Fwww.youtube.com%2Fembed%2FVBbsqJ27HZ0%3Ffeature%3Doembed&url=http%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DVBbsqJ27HZ0&image=http%3A%2F%2Fi.ytimg.com%2Fvi%2FVBbsqJ27HZ0%2Fhqdefault.jpg&key=internal&type=text%2Fhtml&schema=youtube'
     it 'should produce thumbnail URL for YouTube via Embed.ly (entitized)', (done) ->
+      @timeout 6000
       out.on 'data', (data) ->
         chai.expect(data).to.equal 'http://img.youtube.com/vi/VBbsqJ27HZ0/maxresdefault.jpg'
         done()
@@ -76,7 +80,7 @@ describe 'GetThumbnail component', ->
       out.on 'data', (data) ->
         chai.expect(data).to.be.an 'object'
         chai.expect(data.video).to.equal '//www.youtube.com/embed/P5cdlLTqb24?list=UUnPE7t9tqwcsO0LLyw5zuPQ'
-        chai.expect(data.src).to.equal 'http://img.youtube.com/vi/P5cdlLTqb24/maxresdefault.jpg'
+        chai.expect(data.src).to.equal 'http://img.youtube.com/vi/P5cdlLTqb24/hqdefault.jpg'
         done()
       ins.send
         html: '<iframe src="//www.youtube.com/embed/P5cdlLTqb24?list=UUnPE7t9tqwcsO0LLyw5zuPQ"></iframe>'
@@ -92,7 +96,7 @@ describe 'GetThumbnail component', ->
       @timeout 6000
       out.on 'data', (data) ->
         chai.expect(data).to.be.an 'object'
-        chai.expect(data.src).to.equal 'http://img.youtube.com/vi/or88GPhXlWw/maxresdefault.jpg'
+        chai.expect(data.src).to.equal 'http://img.youtube.com/vi/or88GPhXlWw/hqdefault.jpg'
         done()
       ins.send
         html: "<a href=\"href\"><iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/or88GPhXlWw\" frameborder=\"0\" allowfullscreen=\"allowfullscreen\"></iframe>\"Hel</a>"
@@ -100,7 +104,7 @@ describe 'GetThumbnail component', ->
       @timeout 6000
       out.on 'data', (data) ->
         chai.expect(data).to.be.an 'object'
-        chai.expect(data.src).to.equal 'http://img.youtube.com/vi/or88GPhXlWw/maxresdefault.jpg'
+        chai.expect(data.src).to.equal 'http://img.youtube.com/vi/or88GPhXlWw/hqdefault.jpg'
         done()
       ins.send
         html: "<a href=\"href\"><b></b><h1><b><i><p><iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/or88GPhXlWw\" frameborder=\"0\" allowfullscreen=\"allowfullscreen\"></iframe>\"Hel</p></i></b><b><i>Foo</i></b></a>"
@@ -145,6 +149,7 @@ describe 'GetThumbnail component', ->
 
   describe 'with a video object', ->
     it 'should produce thumbnail URL for YouTube without query', (done) ->
+      @timeout 6000
       out.on 'data', (data) ->
         chai.expect(data).to.be.an 'object'
         chai.expect(data.src).to.equal 'http://img.youtube.com/vi/8Dos61_6sss/maxresdefault.jpg'
@@ -152,9 +157,10 @@ describe 'GetThumbnail component', ->
       ins.send
         video: '//www.youtube.com/embed/8Dos61_6sss'
     it 'should produce thumbnail URL for YouTube with query', (done) ->
+      @timeout 6000
       out.on 'data', (data) ->
         chai.expect(data).to.be.an 'object'
-        chai.expect(data.src).to.equal 'http://img.youtube.com/vi/P5cdlLTqb24/maxresdefault.jpg'
+        chai.expect(data.src).to.equal 'http://img.youtube.com/vi/P5cdlLTqb24/hqdefault.jpg'
         done()
       ins.send
         video: '//www.youtube.com/embed/P5cdlLTqb24?list=UUnPE7t9tqwcsO0LLyw5zuPQ'
