@@ -16,7 +16,7 @@ getThumbnail = (video, callback) ->
   callback video
 
 getYouTube = (id, callback) ->
-  callback null, "http://img.youtube.com/vi/#{id}/hqdefault.jpg"
+  callback null, "http://img.youtube.com/vi/#{id}/maxresdefault.jpg"
 
 getVimeo = (id, callback) ->
   superagent.get("http://vimeo.com/api/v2/video/#{id}.json")
@@ -27,7 +27,13 @@ getVimeo = (id, callback) ->
     catch e
       return callback new Error "Failed to parse response"
     return callback new Error 'Missing return info' unless data.length
-    callback null, data[0].thumbnail_large
+    # Start with the largest thumbnail and try to get a better one using
+    # dimensions
+    thumbnail = data[0].thumbnail_large
+    if data[0].width and data[0].height
+      urlParts = thumbnail.split '_'
+      thumbnail = "#{urlParts[0]}_#{data[0].width}x#{data[0].height}.jpg"
+    callback null, thumbnail
 
 getEmbedly = (url, callback) ->
   parsed = uri url.replace /&amp;/g, '&'
@@ -35,6 +41,14 @@ getEmbedly = (url, callback) ->
     return callback new Error 'No source embed found for Embed.ly'
   if parsed.hasQuery 'image'
     data = parsed.search true
+    # If it's YouTube or Vimeo, get the thumbnail from src no matter what
+    match = data.src.match /youtube.com/
+    if match
+      return getThumbnail data.src, callback
+    match = data.src.match /vimeo.com/
+    if match
+      return getThumbnail data.src, callback
+    # Otherwise, use image src from Embedly
     return callback null, data.image
 
   # Fall back to regular handling
