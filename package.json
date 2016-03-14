@@ -1,7 +1,7 @@
 {
   "name": "noflo-video",
   "description": "NoFlo components for video handling",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "author": {
     "name": "Henri Bergius",
     "email": "henri.bergius@iki.fi",
