@@ -38,6 +38,30 @@ describe 'GetThumbnail component', ->
         chai.expect(data).to.equal 'http://img.youtube.com/vi/P5cdlLTqb24/hqdefault.jpg'
         done()
       ins.send '//www.youtube.com/embed/P5cdlLTqb24?list=UUnPE7t9tqwcsO0LLyw5zuPQ'
+    it 'should produce thumbnail URL for YouTube playlist', (done) ->
+      @timeout 6000
+      out.on 'data', (data) ->
+        chai.expect(data).to.equal 'http://img.youtube.com/vi/tS8s7cBqfK0/hqdefault.jpg'
+        done()
+      ins.send 'https://www.youtube.com/watch?v=tS8s7cBqfK0&list=PLB2CD92050E0F9B8E&index=76'
+    it 'should produce thumbnail URL for minified YouTube URL', (done) ->
+      @timeout 6000
+      out.on 'data', (data) ->
+        chai.expect(data).to.equal 'http://img.youtube.com/vi/NLqAF9hrVbY/hqdefault.jpg'
+        done()
+      ins.send 'http://youtu.be/NLqAF9hrVbY'
+    it 'should produce thumbnail URL for simple YouTube URLs', (done) ->
+      @timeout 6000
+      out.on 'data', (data) ->
+        chai.expect(data).to.equal 'http://img.youtube.com/vi/NLqAF9hrVbY/hqdefault.jpg'
+        done()
+      ins.send 'http://www.youtube.com/v/NLqAF9hrVbY?fs=1&hl=en_US'
+    it 'should produce thumbnail URL for YouTube user pages', (done) ->
+      @timeout 6000
+      out.on 'data', (data) ->
+        chai.expect(data).to.equal 'http://img.youtube.com/vi/1p3vcRhsYGo/hqdefault.jpg'
+        done()
+      ins.send 'http://www.youtube.com/user/Scobleizer#p/u/1/1p3vcRhsYGo'
     it 'should produce thumbnail URL for YouTube via Embed.ly', (done) ->
       @timeout 6000
       out.on 'data', (data) ->
@@ -84,6 +108,38 @@ describe 'GetThumbnail component', ->
         done()
       ins.send
         html: '<iframe src="//www.youtube.com/embed/P5cdlLTqb24?list=UUnPE7t9tqwcsO0LLyw5zuPQ"></iframe>'
+    it 'should produce thumbnail URL for YouTube playlist', (done) ->
+      @timeout 6000
+      out.on 'data', (data) ->
+        chai.expect(data).to.be.an 'object'
+        chai.expect(data.src).to.equal 'http://img.youtube.com/vi/tS8s7cBqfK0/hqdefault.jpg'
+        done()
+      ins.send
+        html: '<iframe src="https://www.youtube.com/watch?v=tS8s7cBqfK0&list=PLB2CD92050E0F9B8E&index=76"></iframe>'
+    it 'should produce thumbnail URL for minified YouTube URL', (done) ->
+      @timeout 6000
+      out.on 'data', (data) ->
+        chai.expect(data).to.be.an 'object'
+        chai.expect(data.src).to.equal 'http://img.youtube.com/vi/NLqAF9hrVbY/hqdefault.jpg'
+        done()
+      ins.send
+        html: '<iframe src="http://youtu.be/NLqAF9hrVbY"></iframe>'
+    it 'should produce thumbnail URL for simple YouTube URLs', (done) ->
+      @timeout 6000
+      out.on 'data', (data) ->
+        chai.expect(data).to.be.an 'object'
+        chai.expect(data.src).to.equal 'http://img.youtube.com/vi/NLqAF9hrVbY/hqdefault.jpg'
+        done()
+      ins.send
+        html: '<iframe src="http://www.youtube.com/v/NLqAF9hrVbY?fs=1&hl=en_US"></iframe>'
+    it 'should produce thumbnail URL for YouTube user pages', (done) ->
+      @timeout 6000
+      out.on 'data', (data) ->
+        chai.expect(data).to.be.an 'object'
+        chai.expect(data.src).to.equal 'http://img.youtube.com/vi/1p3vcRhsYGo/hqdefault.jpg'
+        done()
+      ins.send
+        html: '<iframe src="http://www.youtube.com/user/Scobleizer#p/u/1/1p3vcRhsYGo"></iframe>'
     it 'should strip out any dummy HTML around a possible source which have children', (done) ->
       @timeout 6000
       out.on 'data', (data) ->
@@ -164,6 +220,38 @@ describe 'GetThumbnail component', ->
         done()
       ins.send
         video: '//www.youtube.com/embed/P5cdlLTqb24?list=UUnPE7t9tqwcsO0LLyw5zuPQ'
+    it 'should produce thumbnail URL for YouTube playlist', (done) ->
+      @timeout 6000
+      out.on 'data', (data) ->
+        chai.expect(data).to.be.an 'object'
+        chai.expect(data.src).to.equal 'http://img.youtube.com/vi/tS8s7cBqfK0/hqdefault.jpg'
+        done()
+      ins.send
+        video: 'https://www.youtube.com/watch?v=tS8s7cBqfK0&list=PLB2CD92050E0F9B8E&index=76'
+    it 'should produce thumbnail URL for minified YouTube URL', (done) ->
+      @timeout 6000
+      out.on 'data', (data) ->
+        chai.expect(data).to.be.an 'object'
+        chai.expect(data.src).to.equal 'http://img.youtube.com/vi/NLqAF9hrVbY/hqdefault.jpg'
+        done()
+      ins.send
+        video: 'http://youtu.be/NLqAF9hrVbY'
+    it 'should produce thumbnail URL for simple YouTube URLs', (done) ->
+      @timeout 6000
+      out.on 'data', (data) ->
+        chai.expect(data).to.be.an 'object'
+        chai.expect(data.src).to.equal 'http://img.youtube.com/vi/NLqAF9hrVbY/hqdefault.jpg'
+        done()
+      ins.send
+        video: 'http://www.youtube.com/v/NLqAF9hrVbY?fs=1&hl=en_US'
+    it 'should produce thumbnail URL for YouTube user pages', (done) ->
+      @timeout 6000
+      out.on 'data', (data) ->
+        chai.expect(data).to.be.an 'object'
+        chai.expect(data.src).to.equal 'http://img.youtube.com/vi/1p3vcRhsYGo/hqdefault.jpg'
+        done()
+      ins.send
+        video: 'http://www.youtube.com/user/Scobleizer#p/u/1/1p3vcRhsYGo'
     it 'should produce thumbnail URL for Vimeo', (done) ->
       @timeout 6000
       out.on 'data', (data) ->

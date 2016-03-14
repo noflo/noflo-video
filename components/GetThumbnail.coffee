@@ -5,7 +5,8 @@ youthumb = require 'youtube-thumbnails'
 uri = require 'urijs'
 
 getThumbnail = (video, callback) ->
-  match = video.match /youtube.com\/embed\/([^?]*)/
+  youtubeRegexp = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/i
+  match = video.match youtubeRegexp
   if match
     return getYouTube match[1], callback
   match = video.match /vimeo.com\/video\/([^?]*)/
