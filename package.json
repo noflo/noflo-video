@@ -14,7 +14,7 @@
   "license": "MIT",
   "dependencies": {
     "htmlparser": "1.7.x",
-    "noflo": "^0.5.20",
+    "noflo": "^0.7.0",
     "superagent": "1.8.1",
     "urijs": "^1.17.0",
     "youtube-thumbnails": "^1.0.2"
