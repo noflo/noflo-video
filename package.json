@@ -1,7 +1,7 @@
 {
   "name": "noflo-video",
   "description": "NoFlo components for video handling",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "author": {
     "name": "Henri Bergius",
     "email": "henri.bergius@iki.fi",
@@ -14,7 +14,7 @@
   "license": "MIT",
   "dependencies": {
     "htmlparser": "1.7.x",
-    "noflo": "^0.5.20",
+    "noflo": "^0.7.2",
     "superagent": "1.8.1",
     "urijs": "^1.17.0",
     "youtube-thumbnails": "^1.0.2"
@@ -33,7 +33,7 @@
     "grunt-noflo-manifest": "0.1.11",
     "mocha": "2.4.5"
   },
-  "keywords": [],
+  "keywords": ["noflo"],
   "scripts": {
     "test": "grunt test"
   },

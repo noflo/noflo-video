@@ -82,53 +82,50 @@ goDeep = (dom) ->
   return src
 
 exports.getComponent = ->
-  c = new noflo.Component
-  c.icon = 'youtube-play'
-  c.description = 'Generate a thumbnail image URL for a video'
+  new noflo.Component
+    icon: 'youtube-play'
+    description: 'Generate a thumbnail image URL for a video'
+    inPorts:
+      in:
+        datatype: 'all'
+        description: 'Video URL or an object containing a "video" key;'
+        required: true
+    outPorts:
+      out:
+        datatype: 'all'
+      missed:
+        datatype: 'all'
+    process: (input, output) ->
+      return unless input.has 'in'
+      video = input.getData 'in'
+      return unless input.ip.type is 'data'
 
-  c.inPorts.add 'in',
-    datatype: 'all'
-    description: 'Video URL or an object containing a "video" key'
-  c.outPorts.add 'out',
-    datatype: 'all'
-  c.outPorts.add 'missed',
-    datatype: 'all'
-
-  noflo.helpers.WirePattern c,
-    in: 'in'
-    out: 'out'
-    error: 'missed'
-    async: true
-    forwardGroups: true
-  , (video, groups, out, callback) ->
-    if typeof video is 'string'
-      getThumbnail video, (err, thumb) ->
-        return callback err if err
-        out.send thumb
-        do callback
-      return
-    if typeof video is 'object' and video.video
-      getThumbnail video.video, (err, thumb) ->
-        return callback video if err
-        video.src = thumb
-        out.send video
-        do callback
-      return
-    if typeof video is 'object' and video.html
-      handler = new htmlparser.DefaultHandler (err, dom) ->
-        return callback err if err
-        return callback null, video if dom.length > 1
-        return callback null, video unless dom.length
-        src = goDeep dom
-        return callback null, video unless src
-        video.video = src
-        getThumbnail video.video, (err, thumb) ->
-          return callback video if err
-          video.src = thumb
-          out.send video
-          do callback
+      if typeof video is 'string'
+        getThumbnail video, (err, thumb) ->
+          return output.sendDone missed: err if err
+          output.sendDone out: thumb
         return
-      parser = new htmlparser.Parser handler
-      parser.parseComplete video.html
-      return
-    callback video
+      if typeof video is 'object' and video.video
+        getThumbnail video.video, (err, thumb) ->
+          return output.sendDone missed: video if err
+          video.src = thumb
+          output.sendDone out: video
+        return
+      if typeof video is 'object' and video.html
+        handler = new htmlparser.DefaultHandler (err, dom) ->
+          return output.sendDone missed: err if err
+          return output.sendDone out: video if dom.length > 1
+          return output.sendDone out: video unless dom.length
+          src = goDeep dom
+          return output.sendDone out: video unless src
+          video.video = src
+          getThumbnail video.video, (err, thumb) ->
+            return output.sendDone missed: video if err
+            video.src = thumb
+            output.sendDone out: video
+          return
+        parser = new htmlparser.Parser handler
+        parser.parseComplete video.html
+        return
+
+      output.sendDone missed: video
