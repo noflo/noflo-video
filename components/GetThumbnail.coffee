@@ -82,7 +82,7 @@ goDeep = (dom) ->
   return src
 
 exports.getComponent = ->
-  c = new noflo.Component
+  new noflo.Component
     icon: 'youtube-play'
     description: 'Generate a thumbnail image URL for a video'
     inPorts:
