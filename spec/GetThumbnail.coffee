@@ -190,7 +190,6 @@ describe 'GetThumbnail component', ->
       @timeout 6000
       missed.on 'data', (data) ->
         chai.expect(data).to.be.an 'object'
-        # chai.expect(data.src).to.equal 'http://i.ytimg.com/vi/bWKzVO7WJcU/hqdefault.jpg'
         done()
       ins.send
         html: "<video autoplay=\"true\" loop=\"true\" src=\"//s3-us-west-2.amazonaws.com/cdn.thegrid.io/posts/cta-ui-bg.mp4\"></video>"
@@ -198,10 +197,30 @@ describe 'GetThumbnail component', ->
       @timeout 6000
       missed.on 'data', (data) ->
         chai.expect(data).to.be.an 'object'
-        # chai.expect(data.src).to.equal 'http://i.ytimg.com/vi/bWKzVO7WJcU/hqdefault.jpg'
         done()
       ins.send
         html: "<video autoplay=\"true\" loop=\"true\"><source type=\"video/mp4\" src=\"//s3-us-west-2.amazonaws.com/cdn.thegrid.io/posts/cta-ui-bg.mp4\"><source type=\"video/webm\" src=\"//s3-us-west-2.amazonaws.com/cdn.thegrid.io/posts/cta-ui-bg.webm\"></video>"
+    it 'should not produce thumbnail URL for empty video', (done) ->
+      @timeout 6000
+      missed.on 'data', (data) ->
+        chai.expect(data).to.be.an 'object'
+        done()
+      ins.send
+        html: "<video></video>"
+    it 'should not produce thumbnail URL for invalid HTML video block', (done) ->
+      @timeout 6000
+      missed.on 'data', (data) ->
+        chai.expect(data).to.be.an 'object'
+        done()
+      ins.send
+        html: "<video></video"
+    it 'should not produce thumbnail URL for invalid HTML block', (done) ->
+      @timeout 6000
+      missed.on 'data', (data) ->
+        chai.expect(data).to.be.an 'object'
+        done()
+      ins.send
+        html: "<p></p>"
 
   describe 'with a video object', ->
     it 'should produce thumbnail URL for YouTube without query', (done) ->
