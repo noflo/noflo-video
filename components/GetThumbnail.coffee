@@ -117,10 +117,10 @@ exports.getComponent = ->
     if typeof video is 'object' and video.html
       handler = new htmlparser.DefaultHandler (err, dom) ->
         return callback err if err
-        return callback null, video if dom.length > 1
-        return callback null, video unless dom.length
+        return callback video if dom.length > 1
+        return callback video unless dom.length
         src = goDeep dom
-        return callback null, video unless src
+        return callback video unless src
         video.video = src
         getThumbnail video.video, (err, thumb) ->
           return callback video if err
