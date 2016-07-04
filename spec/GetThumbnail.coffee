@@ -99,6 +99,14 @@ describe 'GetThumbnail component', ->
       ins.send 'http://mirrors.dotsrc.org/fosdem/2014/AW1121/Sunday/Flowbased_programming_for_heterogeneous_systems.webm'
 
   describe 'with a HTML object', ->
+    it 'should produce safe thumbnail URL for non-secure Vimeo source via embedly', (done) ->
+      @timeout 6000
+      out.on 'data', (data) ->
+        chai.expect(data).to.be.an 'object'
+        chai.expect(data.src).to.match /^https:/
+        done()
+      ins.send
+        html: '<iframe src="https://cdn.embedly.com/widgets/media.html?src=https%3A%2F%2Fplayer.vimeo.com%2Fvideo%2F110527483&amp;url=https%3A%2F%2Fvimeo.com%2F110527483&amp;image=http%3A%2F%2Fi.vimeocdn.com%2Fvideo%2F494826799_1280.jpg&amp;key=b7d04c9b404c499eba89ee7072e1c4f7&amp;type=text%2Fhtml&amp;schema=vimeo" width="1000" height="563" scrolling="no" frameborder="0" allowfullscreen="allowfullscreen"></iframe>'
     it 'should produce thumbnail URL for YouTube', (done) ->
       @timeout 6000
       out.on 'data', (data) ->
@@ -275,7 +283,7 @@ describe 'GetThumbnail component', ->
       @timeout 6000
       out.on 'data', (data) ->
         chai.expect(data).to.be.an 'object'
-        chai.expect(data.src).to.equal 'http://i.vimeocdn.com/video/470731940_1280x720.jpg'
+        chai.expect(data.src).to.equal 'https://i.vimeocdn.com/video/470731940_1280x720.jpg'
         done()
       ins.send
         video: '//player.vimeo.com/video/91393694?title=0&amp;byline=0&amp;color=ffffff'
