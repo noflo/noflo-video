@@ -4,6 +4,29 @@ htmlparser = require 'htmlparser'
 youthumb = require 'youtube-thumbnails'
 uri = require 'urijs'
 
+whitelist = [
+  'i.vimeocdn.com'
+]
+
+makeSafe = (obj, callback) ->
+  if typeof obj is 'object' and obj.src?
+    url = obj.src
+  unless url?
+    console.warn "Invalid URL #{url}, cannot make it safe"
+    do callback
+    return
+  if isSafe url
+    obj.src = url.replace /^http:/, 'https:'
+  do callback
+
+isSafe = (url) ->
+  safe = false
+  for host in whitelist
+    match = url.match RegExp("^http://#{host}")
+    if match
+      safe = true
+  return safe
+
 getThumbnail = (video, callback) ->
   youtubeRegexp = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/i
   match = video.match youtubeRegexp
@@ -111,8 +134,9 @@ exports.getComponent = ->
       getThumbnail video.video, (err, thumb) ->
         return callback video if err
         video.src = thumb
-        out.send video
-        do callback
+        makeSafe video, ->
+          out.send video
+          do callback
       return
     if typeof video is 'object' and video.html
       handler = new htmlparser.DefaultHandler (err, dom) ->
@@ -125,8 +149,9 @@ exports.getComponent = ->
         getThumbnail video.video, (err, thumb) ->
           return callback video if err
           video.src = thumb
-          out.send video
-          do callback
+          makeSafe video, ->
+            out.send video
+            do callback
         return
       parser = new htmlparser.Parser handler
       parser.parseComplete video.html
