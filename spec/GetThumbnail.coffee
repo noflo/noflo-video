@@ -104,6 +104,7 @@ describe 'GetThumbnail component', ->
       out.on 'data', (data) ->
         chai.expect(data).to.be.an 'object'
         chai.expect(data.src).to.match /^https:/
+        chai.expect(data.html).to.match /image=https/
         done()
       ins.send
         html: '<iframe src="https://cdn.embedly.com/widgets/media.html?src=https%3A%2F%2Fplayer.vimeo.com%2Fvideo%2F110527483&amp;url=https%3A%2F%2Fvimeo.com%2F110527483&amp;image=http%3A%2F%2Fi.vimeocdn.com%2Fvideo%2F494826799_1280.jpg&amp;key=b7d04c9b404c499eba89ee7072e1c4f7&amp;type=text%2Fhtml&amp;schema=vimeo" width="1000" height="563" scrolling="no" frameborder="0" allowfullscreen="allowfullscreen"></iframe>'
