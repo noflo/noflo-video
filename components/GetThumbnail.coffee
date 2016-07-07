@@ -51,8 +51,8 @@ getThumbnail = (video, callback) ->
 getYouTube = (id, callback) ->
   youthumb.all id, (thumbnails) ->
     if thumbnails?.maxres
-      return callback null, "http://img.youtube.com/vi/#{id}/maxresdefault.jpg"
-    callback null, "http://img.youtube.com/vi/#{id}/hqdefault.jpg"
+      return callback null, "https://img.youtube.com/vi/#{id}/maxresdefault.jpg"
+    callback null, "https://img.youtube.com/vi/#{id}/hqdefault.jpg"
 
 getVimeo = (id, callback) ->
   superagent.get("http://vimeo.com/api/v2/video/#{id}.json")
