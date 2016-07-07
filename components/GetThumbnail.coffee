@@ -5,7 +5,8 @@ youthumb = require 'youtube-thumbnails'
 uri = require 'urijs'
 
 whitelist = [
-  'i.vimeocdn.com'
+  service: 'vimeo'
+  host: 'i.vimeocdn.com'
 ]
 
 makeSafe = (obj, callback) ->
@@ -15,17 +16,24 @@ makeSafe = (obj, callback) ->
     console.warn "Invalid URL #{url}, cannot make it safe"
     do callback
     return
-  if isSafe url
+  trusted = isTrusted url
+  if trusted
     obj.src = url.replace /^http:/, 'https:'
+    # TODO: Should do the following in a proper component
+    if trusted is 'vimeo'
+      if obj.html?
+        obj.html = obj.html.replace /image=http%/g, 'image=https%'
+      if obj.video?
+        obj.video = obj.video.replace /image=http%/g, 'image=https%'
   do callback
 
-isSafe = (url) ->
-  safe = false
-  for host in whitelist
-    match = url.match RegExp("^http://#{host}")
+isTrusted = (url) ->
+  trusted = false
+  for item in whitelist
+    match = url.match RegExp("^http://#{item.host}")
     if match
-      safe = true
-  return safe
+      trusted = item.service
+  return trusted
 
 getThumbnail = (video, callback) ->
   youtubeRegexp = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/i
