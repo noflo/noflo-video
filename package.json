@@ -15,7 +15,7 @@
   "dependencies": {
     "htmlparser": "1.7.x",
     "noflo": "^0.7.2",
-    "superagent": "1.8.1",
+    "superagent": "2.2.0",
     "urijs": "^1.17.0",
     "youtube-thumbnails": "^1.0.2"
   },
@@ -33,7 +33,9 @@
     "grunt-noflo-manifest": "0.1.11",
     "mocha": "2.4.5"
   },
-  "keywords": ["noflo"],
+  "keywords": [
+    "noflo"
+  ],
   "scripts": {
     "test": "grunt test"
   },
