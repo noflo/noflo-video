@@ -303,3 +303,11 @@ describe 'GetThumbnail component', ->
         done()
       ins.send
         video: 'http://mirrors.dotsrc.org/fosdem/2014/AW1121/Sunday/Flowbased_programming_for_heterogeneous_systems.webm'
+    it 'should produce thumbnail for Vimeo URL', (done) ->
+      @timeout 6000
+      out.on 'data', (data) ->
+        chai.expect(data).to.be.an 'object'
+        chai.expect(data.src).to.be.equal 'https://i.vimeocdn.com/video/605511151_1920x1080.jpg'
+        done()
+      ins.send
+        video: 'https://vimeo.com/169598313'
