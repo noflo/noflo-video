@@ -40,9 +40,7 @@ getThumbnail = (video, callback) ->
   match = video.match youtubeRegexp
   if match
     return getYouTube match[1], callback
-  match = video.match /vimeo.com\/video\/([^?]*)/
-  unless match
-    match = video.match /vimeo.com\/([^?]*)/
+  match = video.match /vimeo.com\/(?:video\/)?([^?]*)/
   if match
     return getVimeo match[1], callback
   match = video.match /cdn.embedly.com\/widgets\/media.html/
