@@ -86,6 +86,12 @@ describe 'GetThumbnail component', ->
         chai.expect(data).to.equal 'http://i.vimeocdn.com/video/475921185_1280x720.jpg'
         done()
       ins.send '//cdn.embedly.com/widgets/media.html?src=http%3A%2F%2Fplayer.vimeo.com%2Fvideo%2F95895989&src_secure=1&url=http%3A%2F%2Fvimeo.com%2F95895989&image=http%3A%2F%2Fi.vimeocdn.com%2Fvideo%2F475921185_1280.jpg&key=internal&type=text%2Fhtml&schema=vimeo'
+    it 'should produce thumbnail URL for SoundCloud via Embed.ly', (done) ->
+      @timeout 6000
+      out.on 'data', (data) ->
+        chai.expect(data).to.equal 'http://i1.sndcdn.com/artworks-000191113056-akbwmo-t500x500.jpg'
+        done()
+      ins.send '//cdn.embedly.com/widgets/media.html?src=https%3A%2F%2Fw.soundcloud.com%2Fplayer%2F%3Fvisual%3Dtrue%26url%3Dhttp%253A%252F%252Fapi.soundcloud.com%252Ftracks%252F289396323%26show_artwork%3Dtrue&url=https%3A%2F%2Fsoundcloud.com%2Fstansono%2Frewind&image=http%3A%2F%2Fi1.sndcdn.com%2Fartworks-000191113056-akbwmo-t500x500.jpg&key=internal&type=text%2Fhtml&schema=soundcloud'
     it 'should produce thumbnail URL for Vine via Embed.ly', (done) ->
       @timeout 6000
       out.on 'data', (data) ->
