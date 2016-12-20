@@ -47,12 +47,21 @@ module.exports = ->
         options:
           reporter: 'spec'
 
+    # Run a server for the tests so we can actually do AJAX
+    connect:
+      test:
+        options:
+          port: 9000
+
     # BDD tests on browser
     mocha_phantomjs:
       options:
         output: 'spec/result.xml'
         reporter: 'spec'
-      all: ['spec/runner.html']
+        failWithOutput: true
+      all:
+        options:
+          urls: ['http://localhost:9000/spec/runner.html']
 
     # Coding standards
     coffeelint:
@@ -69,6 +78,7 @@ module.exports = ->
 
   # Grunt plugins used for testing
   @loadNpmTasks 'grunt-contrib-watch'
+  @loadNpmTasks 'grunt-contrib-connect'
   @loadNpmTasks 'grunt-mocha-test'
   @loadNpmTasks 'grunt-mocha-phantomjs'
   @loadNpmTasks 'grunt-coffeelint'
@@ -87,8 +97,9 @@ module.exports = ->
     @task.run 'noflo_manifest'
     if target is 'all' or target is 'nodejs'
       @task.run 'mochaTest'
-    if target is 'browser'
+    if target is 'all' or target is 'browser'
       @task.run 'noflo_browser'
+      @task.run 'connect'
       @task.run 'mocha_phantomjs'
 
   @registerTask 'default', ['test']
