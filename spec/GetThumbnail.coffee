@@ -88,6 +88,12 @@ describe 'GetThumbnail component', ->
           chai.expect(data).to.equal 'https://img.youtube.com/vi/VBbsqJ27HZ0/maxresdefault.jpg'
           done()
         ins.send 'https://cdn.embedly.com/widgets/media.html?src=http%3A%2F%2Fwww.youtube.com%2Fembed%2FVBbsqJ27HZ0%3Ffeature%3Doembed&amp;url=http%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DVBbsqJ27HZ0&amp;image=http%3A%2F%2Fi.ytimg.com%2Fvi%2FVBbsqJ27HZ0%2Fhqdefault.jpg&amp;key=b7d04c9b404c499eba89ee7072e1c4f7&amp;type=text%2Fhtml&amp;schema=youtube'
+      it 'should produce thumbnail URL for YouTube videoseries via Embed.ly (entitized)', (done) ->
+        @timeout 6000
+        out.on 'data', (data) ->
+          chai.expect(data).to.equal 'https://i.ytimg.com/vi/t7Xr3AsBEK4/hqdefault.jpg'
+          done()
+        ins.send "//cdn.embedly.com/widgets/media.html?src=https%3A%2F%2Fwww.youtube.com%2Fembed%2Fvideoseries%3Flist%3DPLoh_dGQ3aUhvr6c5hASTc5wFkjQ3COFXi&url=http%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3Dt7Xr3AsBEK4&image=https%3A%2F%2Fi.ytimg.com%2Fvi%2Ft7Xr3AsBEK4%2Fhqdefault.jpg&key=internal&type=text%2Fhtml&schema=youtube"
     it 'should produce thumbnail URL for Vimeo', (done) ->
       @timeout 6000
       out.on 'data', (data) ->
