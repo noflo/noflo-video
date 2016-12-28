@@ -80,6 +80,10 @@ getEmbedly = (url, callback) ->
     # If it's YouTube or Vimeo, get the thumbnail from src no matter what
     match = data.src.match /youtube.com/
     if match
+      # Well, if it's YouTube videoseries, use image instead
+      videoseries = data.src.match /videoseries/
+      if videoseries
+        return callback null, data.image
       return getThumbnail data.src, callback
     match = data.src.match /vimeo.com/
     if match
