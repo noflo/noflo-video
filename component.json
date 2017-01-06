@@ -3,7 +3,7 @@
   "description": "NoFlo components for video handling",
   "author": "Henri Bergius <henri.bergius@iki.fi>",
   "repo": "noflo/noflo-video",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "keywords": [],
   "dependencies": {
     "noflo/noflo": "*",
