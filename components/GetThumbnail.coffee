@@ -63,12 +63,14 @@ getVimeo = (id, callback) ->
     catch e
       return callback new Error "Failed to parse response"
     return callback new Error 'Missing return info' unless data.length
-    # Start with the largest thumbnail and try to get a better one using
-    # dimensions
     thumbnail = data[0].thumbnail_large
-    if data[0].width and data[0].height
-      urlParts = thumbnail.split '_'
-      thumbnail = "#{urlParts[0]}_#{data[0].width}x#{data[0].height}.jpg"
+    # If webp, use jpg provided url, otherwise use original
+    webpReg = /webp$/
+    match = thumbnail.match webpReg
+    if match
+      url = thumbnail.substring 0, match.index
+      thumbnail = url + 'jpg'
+
     callback null, thumbnail
 
 getEmbedly = (url, callback) ->
