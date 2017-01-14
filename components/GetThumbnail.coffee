@@ -46,7 +46,7 @@ getThumbnail = (video, callback) ->
   match = video.match /cdn.embedly.com\/widgets\/media.html/
   if match
     return getEmbedly video, callback
-  callback video
+  callback null, video
 
 getYouTube = (id, callback) ->
   youthumb.all id, (thumbnails) ->
