@@ -118,6 +118,12 @@ describe 'GetThumbnail component', ->
         chai.expect(data).to.equal 'https://v.cdn.vine.co/r/videos/B5B06468B91176403722801139712_342c9a1c624.1.5.15775156368984795444.mp4.jpg?versionId=edU_LrAtIFsGvZj.Fgi0Si1bem68tBlk'
         done()
       ins.send '//cdn.embedly.com/widgets/media.html?src=https%3A%2F%2Fmtc.cdn.vine.co%2Fr%2Fvideos%2FB5B06468B91176403722801139712_342c9a1c624.1.5.15775156368984795444.mp4%3FversionId%3DMfbYrYHKtQn5CarqDt9SoZHnUeQRVt7Z&src_secure=1&url=https%3A%2F%2Fvine.co%2Fv%2FOUnPWge7Jnj&image=https%3A%2F%2Fv.cdn.vine.co%2Fr%2Fvideos%2FB5B06468B91176403722801139712_342c9a1c624.1.5.15775156368984795444.mp4.jpg%3FversionId%3DedU_LrAtIFsGvZj.Fgi0Si1bem68tBlk&key=internal&type=video%2Fmp4&schema=vine'
+    it 'should produce thumbnail URL for image sources', (done) ->
+      @timeout 6000
+      out.on 'data', (data) ->
+        chai.expect(data).to.equal "https://imgflo.herokuapp.com/graph/2b2431f8e7ba7b0/e8ec53b123d6fc8d899e1cc3dfa1164f/noop.jpg?input=http%3A%2F%2Fi1.sndcdn.com%2Fartworks-000064884833-91rohi-t500x500.jpg"
+        done()
+      ins.send "https://imgflo.herokuapp.com/graph/2b2431f8e7ba7b0/e8ec53b123d6fc8d899e1cc3dfa1164f/noop.jpg?input=http%3A%2F%2Fi1.sndcdn.com%2Fartworks-000064884833-91rohi-t500x500.jpg"
     it 'should not produce thumbnail URL for video tags', (done) ->
       missed.on 'data', (data) ->
         chai.expect(data).to.equal 'http://mirrors.dotsrc.org/fosdem/2014/AW1121/Sunday/Flowbased_programming_for_heterogeneous_systems.webm'
