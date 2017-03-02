@@ -13,7 +13,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "htmlparser": "^1.7.0",
+    "htmlparser": "1.7.6",
     "noflo": "0.x >= 0.5",
     "superagent": "^3.3.2",
     "urijs": "^1.17.0",
