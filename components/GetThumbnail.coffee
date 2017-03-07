@@ -141,6 +141,7 @@ exports.getComponent = ->
     error: 'missed'
     async: true
     forwardGroups: true
+    legacy: true
   , (video, groups, out, callback) ->
     if typeof video is 'string'
       getThumbnail video, (err, thumb) ->
