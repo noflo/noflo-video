@@ -137,42 +137,62 @@ exports.getComponent = ->
 
   noflo.helpers.WirePattern c,
     in: 'in'
-    out: 'out'
-    error: 'missed'
+    out: ['out', 'missed']
     async: true
     forwardGroups: true
-    legacy: true
   , (video, groups, out, callback) ->
     if typeof video is 'string'
       getThumbnail video, (err, thumb) ->
-        return callback err if err
-        out.send thumb
+        if err
+          out.missed.send err
+          callback()
+          return
+        out.out.send thumb
         do callback
       return
     if typeof video is 'object' and video.video
       getThumbnail video.video, (err, thumb) ->
-        return callback video if err
+        if err
+          out.missed.send video
+          callback()
+          return
         video.src = thumb
         makeSafe video, ->
-          out.send video
+          out.out.send video
           do callback
       return
     if typeof video is 'object' and video.html
       handler = new htmlparser.DefaultHandler (err, dom) ->
-        return callback err if err
-        return callback video if dom.length > 1
-        return callback video unless dom.length
+        if err
+          out.missed.send err
+          callback()
+          return
+        if dom.length > 1
+          out.missed.send video
+          callback()
+          return
+        unless dom.length
+          out.missed.send video
+          callback()
+          return
         src = goDeep dom
-        return callback video unless src
+        unless src
+          out.missed.send video
+          callback()
+          return
         video.video = src
         getThumbnail video.video, (err, thumb) ->
-          return callback video if err
+          if err
+            out.missed.send video
+            callback()
+            return
           video.src = thumb
           makeSafe video, ->
-            out.send video
+            out.out.send video
             do callback
         return
       parser = new htmlparser.Parser handler
       parser.parseComplete video.html
       return
-    callback video
+    out.missed.send video
+    callback()
