@@ -345,7 +345,7 @@ describe 'GetThumbnail component', ->
       @timeout 6000
       out.on 'data', (data) ->
         chai.expect(data).to.be.an 'object'
-        chai.expect(data.src).to.be.equal 'https://i.vimeocdn.com/video/605511151_640.jpg'
+        chai.expect(data.src).to.be.equal 'https://i.vimeocdn.com/video/632307322_640.jpg'
         done()
       ins.send
         video: 'https://vimeo.com/169598313'
