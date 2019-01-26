@@ -1,10 +1,3 @@
-noflo = require 'noflo'
-unless noflo.isBrowser()
-  chai = require 'chai'
-  path = require 'path'
-  baseDir = path.resolve __dirname, '../'
-else
-  baseDir = 'noflo-adapters'
 describe 'GetThumbnail component', ->
   c = null
   ins = null
@@ -220,7 +213,7 @@ describe 'GetThumbnail component', ->
         @timeout 6000
         out.on 'data', (data) ->
           chai.expect(data).to.be.an 'object'
-          chai.expect(data.src).to.equal 'https://img.youtube.com/vi/bWKzVO7WJcU/maxresdefault.jpg'
+          chai.expect(data.src).to.equal 'https://img.youtube.com/vi/bWKzVO7WJcU/hqdefault.jpg'
           done()
         ins.send
           html: '<iframe src="https://cdn.embedly.com/widgets/media.html?src=http%3A%2F%2Fwww.youtube.com%2Fembed%2FbWKzVO7WJcU%3Ffeature%3Doembed&url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DbWKzVO7WJcU&image=http%3A%2F%2Fi.ytimg.com%2Fvi%2FbWKzVO7WJcU%2Fmaxresdefault.jpg&key=b7d04c9b404c499eba89ee7072e1c4f7&type=text%2Fhtml&schema=youtube" width="854" height="480" scrolling="no" frameborder="0" allowfullscreen="allowfullscreen"></iframe>'
