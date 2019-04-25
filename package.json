@@ -15,7 +15,7 @@
   "dependencies": {
     "htmlparser": "^1.7.0",
     "noflo": "^1.0.0",
-    "superagent": "^3.3.2",
+    "superagent": "^5.0.3",
     "urijs": "^1.17.0",
     "youtube-thumbnails": "^1.0.2"
   },
